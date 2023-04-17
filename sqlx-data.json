@@ -1,5 +1,181 @@
 {
   "db": "PostgreSQL",
+  "09d08f31a3488a7d5bbe51c3313535de61c38474447602494bd93df914a63a5e": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "match_series",
+          "ordinal": 1,
+          "type_info": "Int4"
+        },
+        {
+          "name": "server_id",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "hostname",
+          "ordinal": 3,
+          "type_info": "Text"
+        },
+        {
+          "name": "game_port",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "gotv_port",
+          "ordinal": 5,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "select s.* from servers s join match_series ms on ms.id = s.match_series where ms.completed_at is null"
+  },
+  "0c31e17abbff7e30328e42429b5916c197c4cad357b1ea80bba32288e85fb441": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "DELETE FROM teams WHERE id = $1"
+  },
+  "0d880e635eb012e7184940962fee6c38425575e3a06b21be46065d256f12f29d": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int8"
+        ]
+      }
+    },
+    "query": "DELETE FROM team_members WHERE team = $1 AND member = $2"
+  },
+  "1800969484d1ec424b9331eadf1012ec4d871d52759ccd846a612bb942d2c7b4": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Int4"
+        ]
+      }
+    },
+    "query": "UPDATE teams SET captain = $1 WHERE id = $2"
+  },
+  "19e66fe2c536d499320001781b699b3e8efd8bd5bef7381b5ca61d3d5be80db8": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "name",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "started_at",
+          "ordinal": 2,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "completed_at",
+          "ordinal": 3,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Timestamptz",
+          "Timestamptz",
+          "Int4"
+        ]
+      }
+    },
+    "query": "update tournament SET name = $1, completed_at = $2, started_at = $3 where tournament.id = $4 returning *"
+  },
+  "1cff6d0b7c05f2befe3826ac6d6d65b9642d299340e4cc1643b52b4a2ce09e54": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int8"
+        ]
+      }
+    },
+    "query": "INSERT INTO team_members (team, member) VALUES ($1, $2)"
+  },
+  "3707d62e84721554a6a69e4710c30f745d638c45e82a0065e81d767774ac6164": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "name",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "started_at",
+          "ordinal": 2,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "completed_at",
+          "ordinal": 3,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "select * from tournament order by id desc"
+  },
   "37731bcc8daf01207cc962dca07af5b52983a5022f8ef845135ca46fceccf338": {
     "describe": {
       "columns": [
@@ -30,106 +206,235 @@
     },
     "query": "select * from maps where disabled is false"
   },
-  "40981b078ea46af0a2b8be85b533d704a76c495cf223e7d641b67d102ccfaabb": {
+  "62a46e47c51158ffde88e448dc26e670eac6b034d4b4ffc19c9015f1c11a4035": {
     "describe": {
       "columns": [
         {
-          "name": "location",
+          "name": "id",
           "ordinal": 0,
-          "type_info": "Text"
+          "type_info": "Int4"
         },
         {
-          "name": "server_id",
+          "name": "match_id",
           "ordinal": 1,
-          "type_info": "Text"
+          "type_info": "Int4"
+        },
+        {
+          "name": "team_one_score",
+          "ordinal": 2,
+          "type_info": "Int4"
+        },
+        {
+          "name": "team_two_score",
+          "ordinal": 3,
+          "type_info": "Int4"
         }
       ],
       "nullable": [
         false,
+        false,
+        false,
         false
       ],
       "parameters": {
-        "Left": []
+        "Left": [
+          "Int4"
+        ]
       }
     },
-    "query": "select * from server_templates order by location"
+    "query": "select ms.*\n                 from match_scores ms\n                    join match m on ms.match_id = m.id\n                    join match_series mts on m.match_series = mts.id\n                where mts.id = $1 \n                order by ms.id"
   },
-  "611f787355a490047b0fc1e27165f9ae2b227d06cdb7748f768612a47748f577": {
+  "73523fd2d65b03034a2e1421bd4bc8b76de648aa084d18aacad91ba8e0adbb5d": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "role",
+          "ordinal": 1,
+          "type_info": "Int8"
+        },
+        {
+          "name": "name",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "captain",
+          "ordinal": 3,
+          "type_info": "Int8"
+        },
+        {
+          "name": "tournament",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "is_active",
+          "ordinal": 5,
+          "type_info": "Bool"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "SELECT * FROM TEAMS where id = $1"
+  },
+  "870bc59c56291df4187fdeb50a2e2b2d7d652c3622c23db0cb0bede3a6ee3060": {
     "describe": {
       "columns": [],
       "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "DELETE FROM match_series where id = $1"
+  },
+  "870c7de23d13b4c82521a6797049dec10d694139163ea3e51d712974d633b4a4": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "role",
+          "ordinal": 1,
+          "type_info": "Int8"
+        },
+        {
+          "name": "name",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "captain",
+          "ordinal": 3,
+          "type_info": "Int8"
+        },
+        {
+          "name": "tournament",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "is_active",
+          "ordinal": 5,
+          "type_info": "Bool"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Text",
+          "Int8",
+          "Int4"
+        ]
+      }
+    },
+    "query": "INSERT INTO teams\n                        (role, name, captain, tournament, is_active)\n                    VALUES\n                        ($1, $2, $3, $4, true)\n                    RETURNING *"
+  },
+  "943635a5880aa89bc5222a18e10f8795dc419fd83fd67a5acfec1161daf72a17": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "name",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "started_at",
+          "ordinal": 2,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "completed_at",
+          "ordinal": 3,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        true
+      ],
       "parameters": {
         "Left": [
           "Text",
-          "Text"
+          "Timestamptz"
         ]
       }
     },
-    "query": "insert into server_templates (location, server_id) values ($1, $2)"
+    "query": "insert into tournament (name, started_at, completed_at) values ($1, $2, null) returning *"
   },
-  "72731cd76b310ec291d2a9d67d457b5887630fb09fa5065955bf7824c04e0355": {
-    "describe": {
-      "columns": [],
-      "nullable": [],
-      "parameters": {
-        "Left": [
-          "Text"
-        ]
-      }
-    },
-    "query": "delete from server_templates where location = $1"
-  },
-  "7a5a79f951d908cb1f9102b465ecaa7e1585d4a7f541e1dda3e19bd5b71632ae": {
+  "96039640a215a4a60e42ce5fba89ba365ce51b337081174f2f0ae7e48a6e75ce": {
     "describe": {
       "columns": [
         {
-          "name": "discord",
+          "name": "id",
           "ordinal": 0,
-          "type_info": "Int8"
+          "type_info": "Int4"
         },
         {
-          "name": "steam",
+          "name": "name",
           "ordinal": 1,
-          "type_info": "Int8"
+          "type_info": "Text"
+        },
+        {
+          "name": "started_at",
+          "ordinal": 2,
+          "type_info": "Timestamptz"
+        },
+        {
+          "name": "completed_at",
+          "ordinal": 3,
+          "type_info": "Timestamptz"
         }
       ],
       "nullable": [
         false,
-        false
-      ],
-      "parameters": {
-        "Left": [
-          "Int8"
-        ]
-      }
-    },
-    "query": "select si.*\n                 from steam_ids si\n                    join team_members tm on tm.member = si.discord\n                    join teams t on t.id = tm.team\n                 where t.role = $1"
-  },
-  "82857af5fb28a5a22092b5f0d86d62019eee2d1acc415777d4de183f0fa010b3": {
-    "describe": {
-      "columns": [
-        {
-          "name": "discord",
-          "ordinal": 0,
-          "type_info": "Int8"
-        },
-        {
-          "name": "steam",
-          "ordinal": 1,
-          "type_info": "Int8"
-        }
-      ],
-      "nullable": [
         false,
-        false
+        false,
+        true
       ],
       "parameters": {
         "Left": [
-          "Int8"
+          "Int4"
         ]
       }
     },
-    "query": "select * from steam_ids where discord = $1"
+    "query": "select * from tournament where id = $1"
   },
   "a089a138eda08751e329768ac92fdbd725f34e2e61f1da2d4d6d5915a356fb44": {
     "describe": {
@@ -163,18 +468,283 @@
     },
     "query": "select * from maps where id = $1"
   },
-  "ccfc8fc1bb779503251926e3a1020bbab4e5ce5461d30bc9864a7cf65bc0ac20": {
+  "a26589451d24e6efa862fc1b98b9122d145516eeb21e2daec75856cdefe24f20": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "role",
+          "ordinal": 1,
+          "type_info": "Int8"
+        },
+        {
+          "name": "name",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "captain",
+          "ordinal": 3,
+          "type_info": "Int8"
+        },
+        {
+          "name": "tournament",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "is_active",
+          "ordinal": 5,
+          "type_info": "Bool"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      }
+    },
+    "query": "SELECT * FROM teams WHERE role = $1"
+  },
+  "a5f0289a22955981287a5332e8f26238c005bb51a9c58407e2c615e0f838c204": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "\n            insert into match_scores (match_id)\n                    VALUES\n                        ($1)\n                    "
+  },
+  "a829bc1f1a12b0561e74451fbb296aebbff4100e8408a72039687cc0542184b7": {
+    "describe": {
+      "columns": [
+        {
+          "name": "member",
+          "ordinal": 0,
+          "type_info": "Int8"
+        }
+      ],
+      "nullable": [
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "SELECT member FROM team_members WHERE team = $1"
+  },
+  "aa49920a53042aed03824ec4741703ca156c98c39f3f38d1555c8ff0b91cc154": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Int4"
+        ]
+      }
+    },
+    "query": "UPDATE match_series SET dathost_match = $1 WHERE id = $2"
+  },
+  "abd59fdaf14d424bf62376b9ead6712e76ac85804f62b813455a623c794a4dba": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "match_series",
+          "ordinal": 1,
+          "type_info": "Int4"
+        },
+        {
+          "name": "map",
+          "ordinal": 2,
+          "type_info": "Int4"
+        },
+        {
+          "name": "picked_by",
+          "ordinal": 3,
+          "type_info": "Int4"
+        },
+        {
+          "name": "start_ct_team",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "start_t_team",
+          "ordinal": 5,
+          "type_info": "Int4"
+        },
+        {
+          "name": "completed_at",
+          "ordinal": 6,
+          "type_info": "Timestamptz"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "select m.* from match_series ms\n                join match m on m.match_series = ms.id\n                where match_series = $1\n                order by m.id\n                "
+  },
+  "aced33d609cee6c41277776f7a602a991f24410b33b746a7423f688fd242aec3": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "role",
+          "ordinal": 1,
+          "type_info": "Int8"
+        },
+        {
+          "name": "name",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "captain",
+          "ordinal": 3,
+          "type_info": "Int8"
+        },
+        {
+          "name": "tournament",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "is_active",
+          "ordinal": 5,
+          "type_info": "Bool"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "SELECT * FROM TEAMS where is_active is true"
+  },
+  "bbdb40b09e75911c9f27a830ceaa6466cb3bdc1696a95b857548bb7f0d69aaef": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Text",
+          "Text",
+          "Int4",
+          "Int4"
+        ]
+      }
+    },
+    "query": "insert into servers (match_series, server_id, hostname, game_port, gotv_port)values ($1, $2, $3, $4, $5)"
+  },
+  "c268f98ed7d82b9ef6cab3dbc1e22e23d4f76362307e444173d112a2ff418b23": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "role",
+          "ordinal": 1,
+          "type_info": "Int8"
+        },
+        {
+          "name": "name",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "captain",
+          "ordinal": 3,
+          "type_info": "Int8"
+        },
+        {
+          "name": "tournament",
+          "ordinal": 4,
+          "type_info": "Int4"
+        },
+        {
+          "name": "is_active",
+          "ordinal": 5,
+          "type_info": "Bool"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      }
+    },
+    "query": "SELECT teams.*\n                     FROM team_members\n                     JOIN teams\n                        ON team_members.team = teams.id\n                     WHERE team_members.member = $1\n                        and is_active is true"
+  },
+  "e14891eb88a55f8244bc5527f929b405fe5fcb03de820fa5b75633210027f20e": {
     "describe": {
       "columns": [],
       "nullable": [],
       "parameters": {
         "Left": [
           "Int8",
-          "Int8"
+          "Int4"
         ]
       }
     },
-    "query": "INSERT INTO steam_ids (discord, steam) VALUES ($1, $2)\n                    ON CONFLICT (discord) DO UPDATE\n                    SET steam = $2"
+    "query": "UPDATE match_series SET thread = $1 WHERE id = $2"
   },
   "fa8ab8ca8ad360500b9a33f7fc2ac8198f8f750933f9529d1e3d52358d1c69cc": {
     "describe": {
@@ -205,5 +775,17 @@
       }
     },
     "query": "select * from maps"
+  },
+  "fe2a85d49441dab9639af9d795832867eb2f08da2446093d409be21f66d9411d": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "UPDATE teams SET is_active = false WHERE id = $1"
   }
 }
